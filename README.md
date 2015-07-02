@@ -17,7 +17,7 @@ The common way to compile the packages in this repo is
 ## Vision
 
 ### SLIC-Superpixel
-Original from [PSMM!](https://github.com/PSMM/SLIC-Superpixels)
+Original from [PSMM](https://github.com/PSMM/SLIC-Superpixels)
 
 
 ### Saliency 
