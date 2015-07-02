@@ -8,11 +8,11 @@ Kanzhi Wu
 
 # Usage
 The common way to compile the packages in this repo is
-'''
+```
   mkdir build
   cd build
   cmake .. && make
-'''
+```
 
 ## Vision
 
