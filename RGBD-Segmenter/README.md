@@ -1,39 +1,42 @@
 SegmenterLight 0.1
-##################
+==================
 This software package contains software to segment data from RGBD-sensors, such as Microsoft Kinect or Asus Xtion. 
 
 
-Related papers
-##############
+### Related papers
+
 [Richtsfeld2012] Segmentation of Unknown Objects in Indoor Environments. Richtsfeld A., Mörwald T., Prankl J.,
 Zillich M. and Vincze M. IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2012
 
 
-Prerequisites
-#############
+### Prerequisites
 The software package is designed and tested under Linux (11.10 and 12.04). Installation of OpenCV (> Vers. 2.4.1)
 and installation of the pcl-trunk (www.pointclouds.org) is mandatory. 
 The following Linux (Ubuntu) packages are required:
+
 - Eigen3
+- **Please install PCL with on_nurbs module for surface fitting**
 
-# Please install PCL with on_nurbs module for surface fitting #
 
-
-Installation
-############
+### Installation
 Open a console session and go to the root of the software package. Then:
-	$ make build
-	$ cd build
-	$ cmake ..
-	$ make
+```
+$ make build
+$ cd build
+$ cmake ..
+$ make
+```
 To install the software to the system (default: /usr/local/):
-	$ sudo make install
+```	
+$ sudo make install 
+```
 Uninstall the software:
-	$ sudo make uninstall
+```	
+$ sudo make uninstall
+```
 
 
-Using the software
-##################
+## Using the software
 
 We provide a interface to use the segmentation in your software package. Link the produced library 'v4rSegmenterLight'
 (libv4rSegmenterLight.so) to your C++ project and add the folling to your code:
