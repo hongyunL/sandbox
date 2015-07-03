@@ -19,10 +19,11 @@ The common way to compile the packages in this repo is
 ### SLIC-Superpixel
 Original from [PSMM](https://github.com/PSMM/SLIC-Superpixels)
 
-
 ### Saliency Detection via Graph-Based Manifold Ranking
 Original from [Guangyu Zhong](https://github.com/GYZHikari/Opencv-Saliency)
 
+### FASA
+Reference: Yildirim G., Susstrunk S. - FASA: Fast, Accurate, and Size-Aware Salient Object Detection. ACCV, 2014
 
 ## Robotics
 
