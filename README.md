@@ -6,7 +6,7 @@ The reason for this is ONLY to make the codes are carefully categorized.
 
 Kanzhi Wu
 
-# Usage
+## Usage
 The common way to compile the packages in this repo is
 ```
   mkdir build
@@ -23,6 +23,8 @@ Original from [PSMM](https://github.com/PSMM/SLIC-Superpixels)
 ### Saliency Detection via Graph-Based Manifold Ranking
 Original from [Guangyu Zhong](https://github.com/GYZHikari/Opencv-Saliency)
 
+
+## Robotics
 
 ### RGBD-Segmenter
 Reference: Richtsfeld A., Mörwald T., Prankl J., Zillich M. and Vincze M. - 

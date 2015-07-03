@@ -77,7 +77,9 @@ Do not hesitate to contact me for further questions.
 
 -------------------
 DI Richtsfeld Andreas
+
 Vienna University of Technology
-Gusshausstraße 25
-1170 Vienna
+
+Gusshausstraße 25 1170 Vienna
+
 ari(at)acin.tuwien.ac.at
