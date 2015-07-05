@@ -25,6 +25,9 @@ Original from [Guangyu Zhong](https://github.com/GYZHikari/Opencv-Saliency)
 ### FASA
 Reference: Yildirim G., Susstrunk S. - FASA: Fast, Accurate, and Size-Aware Salient Object Detection. ACCV, 2014
 
+### RGBD-Saliency
+Reference: K. Desingh, K. M. Krishna, D. Rajan and C. V. Jawahar - Depth Really Matters: Improving Visual Salient Region Detection with Depth, BMVC, 2013
+
 ## Robotics
 
 ### RGBD-Segmenter
@@ -33,5 +36,6 @@ Segmentation of Unknown Objects in Indoor Environments.  IEEE/RSJ International
 Conference on Intelligent Robots and Systems (IROS), 2012
 
 Original from [link](http://www.acin.tuwien.ac.at/forschung/v4r/mitarbeiterprojekte/rgb-d-segmentation/)
+
 
 
