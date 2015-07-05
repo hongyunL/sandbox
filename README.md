@@ -25,11 +25,16 @@ Original from [Guangyu Zhong](https://github.com/GYZHikari/Opencv-Saliency)
 ### FASA
 Reference: Yildirim G., Susstrunk S. - FASA: Fast, Accurate, and Size-Aware Salient Object Detection. ACCV, 2014
 
+### VOCUS2
+Reference: Simone Frintrop, Thomas Werner, and Germán Martín García: Traditional Saliency Reloaded: A Good Old Model in New Shape, IEEE International Conference on Computer Vision and Pattern Recognition (CVPR), Boston, June 2015 
+Original from [Dr. Simone Frintrop](http://www.iai.uni-bonn.de/~frintrop/vocus2.html)
+
 ### RGBD-Saliency
-Reference: K. Desingh, K. M. Krishna, D. Rajan and C. V. Jawahar - Depth Really Matters: Improving Visual Salient Region Detection with Depth, BMVC, 2013
+Reference: K. Desingh, K. M. Krishna, D. Rajan and C. V. Jawahar - Depth Really Matters: Improving Visual Salient Region Detection with Depth, BMVC, 2013 
 
-## Robotics
 
+
+## Robotics 
 ### RGBD-Segmenter
 Reference: Richtsfeld A., Mörwald T., Prankl J., Zillich M. and Vincze M. - 
 Segmentation of Unknown Objects in Indoor Environments.  IEEE/RSJ International
