@@ -116,6 +116,8 @@ public:
   /** Run the pre-segmenter **/
   void run(std::string _rgbd_filename, int _startIdx, int _endIdx, bool _live); 
 
+  /** run the segmenter on Washington Dataset */
+  void uw_run(  );
 };
 
 }

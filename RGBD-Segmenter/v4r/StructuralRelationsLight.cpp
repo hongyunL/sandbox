@@ -243,14 +243,20 @@ printf("StructuralRelationsLight::computeRelations start!\n");
 //     }
   } // end parallel sections
 
-  
-  surface::Relation relations[view->surfaces.size()][view->surfaces.size()];
+
+  std::vector< std::vector<surface::Relation> > relations(view->surfaces.size());
+  for ( int ii = 0; ii < (int)relations.size(); ++ ii )
+      relations[ii].resize(view->surfaces.size());
+
+//  surface::Relation relations[view->surfaces.size()][view->surfaces.size()];
   surface::Relation rel;
   rel.valid = false;
   for(unsigned i=0; i<view->surfaces.size(); i++)
-    for(unsigned j=i+1; j<view->surfaces.size(); j++)
+    for(unsigned j=i+1; j<view->surfaces.size(); j++) {
       relations[i][j] = rel;
+    }
   
+
 #pragma omp parallel for
   for(int i=0; i<(int)view->surfaces.size(); i++) {
     for(int j=0; j<(int)view->surfaces[i]->neighbors3D.size(); j++) {
@@ -296,6 +302,7 @@ printf("StructuralRelationsLight::computeRelations start!\n");
       }
     }
   }
+
   
   // copy relations to view
   for(unsigned i=0; i<view->surfaces.size(); i++)
