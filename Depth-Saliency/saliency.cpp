@@ -4,6 +4,7 @@
 #include <pcl/filters/voxel_grid.h>
 
 #include <cmath>
+#include <limits>
 
 using namespace std;
 
@@ -72,7 +73,8 @@ void Saliency::normal_mutual_saliency() {
     // vector<float> zs;
     map<int, Hist> hists;
     map<int, float> zs;
-    
+    map<int, int> psize;
+
     for ( int i = 0; i < (int)group_indices_.size(); ++ i ) {
     	vector<int> idxs = group_indices_[i];
         vector<float> angles;
@@ -86,16 +88,17 @@ void Saliency::normal_mutual_saliency() {
                  pcl_isfinite (normals_->points[idxs[j]].normal_x) &&
                  pcl_isfinite (normals_->points[idxs[j]].normal_y) &&
                  pcl_isfinite (normals_->points[idxs[j]].normal_z) ) {
-                z += labeled_cloud_->points[idxs[j]].z;
+                z += sqrt(pow(labeled_cloud_->points[idxs[j]].z,2)+
+                          pow(labeled_cloud_->points[idxs[j]].x,2)+
+                          pow(labeled_cloud_->points[idxs[j]].y,2));
                 filtered_idxs.push_back( idxs[j] );                
             }
         }
         z /= (int)filtered_idxs.size();
 
-        int rand_pairs = filtered_idxs.size()/5;
-        if ( rand_pairs >= 10 ) {
+        int rand_pairs = filtered_idxs.size();
+        if ( rand_pairs >= 100 ) {
             // generate random pairs
-            vector< pair<int, int> > pairs;
             for ( int ii = 0; ii < rand_pairs; ++ ii ) {
                 int j = rand()%filtered_idxs.size();
                 int k = rand()%filtered_idxs.size();
@@ -112,6 +115,7 @@ void Saliency::normal_mutual_saliency() {
             
             Hist hist = compute_histogram( angles, 18, 180.0 );
             zs.insert( make_pair(i, z) );
+            psize.insert( make_pair(i, rand_pairs) );
             // hists.push_back( hist );
             // zs.push_back(z);
             hists.insert( make_pair(i, hist) );
@@ -146,7 +150,8 @@ void Saliency::normal_mutual_saliency() {
     }
 
     // compute constrast score
-    float max_cscore = -10.0;
+    float max_cscore = std::numeric_limits<float>::min();
+    float min_cscore = std::numeric_limits<float>::max();
     map<int, float> cscores;
     // vector<float> cscores;
     for ( map<int, Hist>::const_iterator it = hists.begin(); it != hists.end(); ++ it ) {
@@ -154,7 +159,7 @@ void Saliency::normal_mutual_saliency() {
         int sum_nj = 0;
         for ( map<int, Hist>::const_iterator jt = hists.begin(); jt != hists.end(); ++ jt ) {
             if ( it != jt ) {
-                sum_nj = jt->second.size();
+                sum_nj += jt->second.size();
                 Hist hi = it->second;
                 Hist hj = jt->second;
                 for ( int k = 0; k < (int)hi.size(); ++ k ) {
@@ -162,15 +167,18 @@ void Saliency::normal_mutual_saliency() {
                 }
             }
         }
-        float cscore = 2*zs[it->first]*it->second.size()/(sum_nj)*hist_diff;
+        float cscore = 2*zs[it->first]*psize[it->first]/(sum_nj)*hist_diff;
         if ( cscore > max_cscore )
             max_cscore = cscore;
+        if ( cscore < min_cscore )
+            min_cscore = cscore;
         cscores.insert( make_pair(it->first, cscore) );
     }
 
     for ( map<int, float>::const_iterator it = cscores.begin(); it != cscores.end(); ++ it ) {
-        sal_scores_.insert(make_pair( it->first, 1 - it->second/max_cscore ));
+        sal_scores_.insert(make_pair( it->first, 1 - (it->second-min_cscore)/(max_cscore-min_cscore) ));
     }
+
         
 
 
@@ -235,4 +243,9 @@ void Saliency::compute_sal_image() {
     cv::namedWindow( "saliency_image" );
     cv::imshow( "saliency_image", image );
     cv::waitKey(0);
+}
+
+
+cv::Mat Saliency::get_sal_img() {
+    return saliency_img_;
 }

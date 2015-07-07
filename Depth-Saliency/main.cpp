@@ -6,10 +6,26 @@
 
 #include <opencv2/opencv.hpp>
 
+#include <pcl/point_types.h>
+#include <pcl/point_cloud.h>
+#include <pcl/io/pcd_io.h>
 
 using namespace std;
 
 pcl::PointCloud<pcl::PointXYZRGB>::Ptr image2cloud( cv::Mat img, cv::Mat depth_img, float cx = 319.5, float cy = 239.5, float fx = 570.3, float fy = 570.3 );
+
+
+struct Relation
+{
+  unsigned type;                                ///< Type of relation (structural level = 1 / assembly level = 2)
+  unsigned id_0;                                ///< ID of first surface
+  unsigned id_1;                                ///< ID of second surface
+  std::vector<double> rel_value;                ///< relation values (feature vector)
+  std::vector<double> rel_probability;          ///< probabilities of correct prediction (two class)
+  unsigned groundTruth;                         ///< 0=false / 1=true
+  unsigned prediction;                          ///< 0=false / 1=true
+  bool valid;                                   ///< validity flag
+};
 
 // image to point cloud
 pcl::PointCloud<pcl::PointXYZRGB>::Ptr image2cloud( cv::Mat img, cv::Mat depth_img, float cx, float cy, float fx, float fy ) {
@@ -31,10 +47,36 @@ pcl::PointCloud<pcl::PointXYZRGB>::Ptr image2cloud( cv::Mat img, cv::Mat depth_i
             rgb_cloud->points.push_back( pt );
         }
     }
+//    pcl::io::savePCDFileASCII( "/tmp/cloud1.pcd", *rgb_cloud );
     return rgb_cloud;
 }
 
 int main( int argc, char ** argv ) {
+#if 0
+    string prefix = string( argv[1] );
+    int i = boost::lexical_cast<int>(string(argv[2]));
+    for ( int i = 1; i <= n; ++ i ) {
+        string rgb_fn = prefix + boost::lexical_cast<string>(i) + ".png";
+        string depth_fn = prefix + boost::lexical_cast<string>(i) + "_depth.png";
+        cv::Mat rgb_image = cv::imread( rgb_fn, CV_LOAD_IMAGE_COLOR );
+        cv::Mat depth_image = cv::imread( depth_fn, CV_LOAD_IMAGE_ANYDEPTH );
+        pcl::PointCloud<pcl::PointXYZRGB>::Ptr rgb_cloud = image2cloud( rgb_image, depth_image );
+        Segment seg( rgb_cloud );
+        if ( !strcmp( "-fit", argv[3] ) )
+            seg.surface_fitting();
+        else if( !strcmp( "-grow", argv[3] ) )
+            seg.region_growing();
+        else {
+            cout << "Error in input command\n";
+            cout << "<prog_name> <rgb_image> <depth_image> <seg-method:-fit/-grow>\n";
+            return -1;
+        }
+        Saliency sal( seg.get_labeled_cloud() );
+        sal.normal_mutual_saliency();
+        cv::imwrite( prefix + boost::lexical_cast<string>(i) + "_saliency.png", sal.get_sal_img() );
+    }
+#endif
+
     cv::Mat rgb_image = cv::imread( string(argv[1]), CV_LOAD_IMAGE_COLOR );
     cv::Mat depth_image = cv::imread( string(argv[2]), CV_LOAD_IMAGE_ANYDEPTH );
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr rgb_cloud = image2cloud( rgb_image, depth_image );

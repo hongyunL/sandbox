@@ -135,7 +135,7 @@ void Segment::display() {
 
     cv::namedWindow( "labeled_image" );
     cv::imshow( "labeled_image", image );
-    cv::waitKey(0);
+    cv::waitKey(10);
 }
 
 

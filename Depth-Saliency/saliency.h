@@ -30,5 +30,7 @@ public:
     void normal_mutual_saliency();
 
     void compute_sal_image();
+
+    cv::Mat get_sal_img();
 };
 #endif
